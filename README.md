@@ -1,3 +1,6 @@
+# Smart Contract Deployed
+https://sepolia.basescan.org/address/0x32c62C09CF0C6eBDBa31f370A8c7B578b74746E0
+
 # Project Overview
 Simple Ethereum smart contract project using Foundry.  
 Implements a `Greeting` contract with a mutable `string` message.  
