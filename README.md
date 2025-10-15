@@ -1,66 +1,48 @@
-## Foundry
+# Project Overview
+Simple Ethereum smart contract project using Foundry.  
+Implements a `Greeting` contract with a mutable `string` message.  
+Built following the instructions of the first Dev3pack challenge.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Tech Stack
+- Solidity ^0.8.13
+- Foundry (Forge, Cast, Anvil)
+- Base Sepolia network for deployment and verification
 
-Foundry consists of:
-
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
+## Key Files
+- `src/Greeting.sol`: Contract with `constructor(string)`, `setGreeting(string)`, and `greet()` methods.
+- `test/`: Placeholder for unit tests.
+- `lib/forge-std`: Foundry standard library submodule.
+- `.env.example`: Sample environment variables for RPC and keys.
 
 ## Usage
-
-### Build
-
-```shell
-$ forge build
+Build:
+```bash
+forge build
 ```
 
-### Test
-
-```shell
-$ forge test
+Test:
+```bash
+forge test
 ```
 
-### Format
-
-```shell
-$ forge fmt
+## Deploy (Base Sepolia)
+PowerShell example:
+```bash
+forge create src/Greeting.sol:Greeting --rpc-url $env:BASE_SEPOLIA_RPC_URL --broadcast --private-key $env:PRIVATE_KEY --constructor-args "Hello Base Builders-Brazil Sonia"
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+## Verify (Base Sepolia)
+Encode constructor args:
+```bash
+cast abi-encode "constructor(string)" "Hello Base Builders-Brazil Sonia"
 ```
 
-### Anvil
-
-```shell
-$ anvil
+Verify:
+```bash
+forge verify-contract --chain base-sepolia --verifier etherscan --etherscan-api-key $env:BASESCAN_API_KEY --constructor-args <ENCODED_ARGS> <DEPLOYED_ADDRESS> src/Greeting.sol:Greeting
 ```
 
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Notes
+- On PowerShell, reference environment variables with `$env:VAR`.
+- If verification needs a direct endpoint, add `--verifier-url https://api-sepolia.basescan.org/api`.
+- After cloning, run `git submodule update --init --recursive` to fetch `forge-std`.
